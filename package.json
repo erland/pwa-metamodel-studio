@@ -12,7 +12,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify:fixture": "node scripts/verify-fixture.mjs",
-    "verify": "npm run verify:fixture && npm run typecheck && npm run lint && npm run test && npm run build"
+    "verify": "npm run verify:fixture && npm run typecheck && npm run lint && npm run test && npm run build",
+    "generate:validators": "node scripts/generate-validators.mjs",
+    "predev": "npm run generate:validators",
+    "prebuild": "npm run generate:validators",
+    "pretest": "npm run generate:validators",
+    "pretypecheck": "npm run generate:validators"
   },
   "dependencies": {
     "fflate": "^0.8.2",

@@ -19,11 +19,11 @@ for (const name of names) {
 // require() calls to ESM imports so Vite can bundle them for browser execution.
 const raw = standaloneCode(ajv, ids);
 const runtimeModules = new Map();
-const outputBody = raw.replace(/require\\(["'](ajv\\/dist\\/runtime\\/[^"']+)["']\\)/g, (_match, modulePath) => {
+const outputBody = raw.replace(/require\(["'](ajv\/dist\/runtime\/[^"']+)["']\)/g, (_match, modulePath) => {
   if (!runtimeModules.has(modulePath)) runtimeModules.set(modulePath, `__ajvRuntime${runtimeModules.size}`);
   return runtimeModules.get(modulePath);
 });
-if (/\\brequire\\s*\\(/.test(outputBody)) throw new Error('Unconverted CommonJS require in generated validators');
+if (/\brequire\s*\(/.test(outputBody)) throw new Error('Unconverted CommonJS require in generated validators');
 const imports = [...runtimeModules].map(([path, variable]) =>
   `import * as ${variable} from '${path}.js';`
 ).join('\n');

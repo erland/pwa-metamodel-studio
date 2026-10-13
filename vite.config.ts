@@ -25,4 +25,4 @@ function offlinePrecache(): Plugin {
     await writeFile(join(root, 'sw.js'), source.replace('__CACHE_VERSION__', revision).replace('__PRECACHE_FILES__', JSON.stringify(files)));
   }};
 }
-export default defineConfig({ plugins: [react(), offlinePrecache()], test: { environment: 'jsdom', include: ['src/**/*.test.ts', 'src/**/*.test.tsx'] } });
+export default defineConfig({ base: process.env.GITHUB_PAGES === 'true' ? '/pwa-metamodel-studio/' : '/', plugins: [react(), offlinePrecache()], test: { environment: 'jsdom', include: ['src/**/*.test.ts', 'src/**/*.test.tsx'] } });

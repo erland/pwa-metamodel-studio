@@ -1,46 +1,48 @@
-# Metamodel Studio 0.1.0 — DEV-001
+# Metamodel Studio
 
-PWA-förberedd React/TypeScript/Vite-projektgrund med **skrivskyddad ZIP-inventering** och oförändrad golden fixture från Application Architecture Metamodel v0.7.0.
+**Metamodel Studio v0.1.17** är en lokal, installerbar PWA för att öppna, utforska, validera, redigera och exportera metamodeller i det kanoniska ZIP/YAML-formatet från Metamodel Builder.
 
-## Start
+**[Öppna Metamodel Studio på GitHub Pages](https://erland.github.io/pwa-metamodel-studio/)**
+
+> Webbappen publiceras från en GitHub-release efter att GitHub Pages har konfigurerats med **GitHub Actions** som källa. Länken fungerar först efter en godkänd första release-deploy.
+
+## Funktioner
+
+- Import av metamodell-ZIP med fil- och storlekskontroller samt stöd för åtta kanoniska YAML-filer.
+- Sökbar modellutforskare och referensgraf med diagnostik.
+- Redigering av element, relationer, egenskaper, vyer, notation, provenance och guidance.
+- Lokal utkastlagring, revisioner och återställning i IndexedDB.
+- Versionshantering, ändringsjämförelse och ZIP-export med varningar om inaktuella genererade artefakter.
+- PWA-manifest, service worker och offlinecache för appens statiska filer. Inga importerade användarfiler laddas upp till en server.
+
+## Lokal utveckling
+
+Node.js 22 rekommenderas.
 
 ```bash
-npm ci
+npm install
 npm run dev
 npm run verify
 ```
 
-`npm run verify` kontrollerar fixture, typer, ESLint, Vitest och produktionsbuild. `npm run preview` visar produktionsbuilden.
+`npm run verify` kör referensmodellkontroll, TypeScript, ESLint, Vitest och produktionsbygge. `npm run preview` visar det byggda resultatet. Projektet innehåller för närvarande ingen `package-lock.json`, och använder därför `npm install` i CI i stället för `npm ci`.
 
-## DEV-001 / gräns
+## GitHub Actions
 
-- Välj ZIP eller öppna den inbyggda referensmodellen, inspektera arkivets struktur och åtta canonical-filnamn.
-- Ingen serveruppladdning. Läsning sker i webbläsaren.
-- **Ej en säker ZIP-importer ännu.** Öppna bara betrodda ZIP-filer i denna version: storleksgränser, ZIP-slip-skydd och ZIP-bombskydd kommer i DEV-002.
-- YAML-innehåll tolkas inte ännu, ingen schema-/semantikvalidering, ingen skrivning eller export.
-- PWA-installation/offline-cache är planerad till DEV-012; projektet är PWA-förberett men gör inte anspråk på offlineinstallation ännu.
+- **Build and test** (`.github/workflows/ci.yml`) körs vid pull requests, push till `main` och manuellt. Verifierar projektet och laddar upp byggda `dist/` som artifact.
+- **Deploy GitHub Pages on release** (`.github/workflows/pages.yml`) körs när en release publiceras, eller manuellt. Bygger från release-taggen, verifierar koden och publicerar `dist/` till Pages.
 
-Planeringsdokumenten finns i `docs/`. Arbetsstatus i `.system-builder/work-status.yaml`.
+### Aktivera GitHub Pages
 
-## DEV-002 (v0.1.3)
-Säker ZIP-förkontroll och YAML round-trip finns i `src/lib/archive.ts`. Tester är uppskjutna på användarens begäran. Se `docs/dev-002-implementation.md`.
+1. Merga PR:en till `main`.
+2. Gå till **Settings → Pages → Build and deployment** och välj **GitHub Actions** som Source.
+3. Skapa och publicera en GitHub-release, exempelvis `v0.1.17`, från `main`.
+4. Kontrollera att workflow **Deploy GitHub Pages on release** blir grönt. Appen finns då på länken ovan.
 
-## DEV-003: kanonisk domänmodell
+Pages-bygget använder Vites `base=/pwa-metamodel-studio/` så att skript, manifest, service worker och offline-resurser fungerar under projektets sökväg. Lokala byggen använder fortsatt `/`.
 
-`parseMetamodel(openZip(bytes))` i `src/lib/metamodel.ts` läser de åtta obligatoriska YAML-filerna i skrivskyddat läge och ger en referensgraf. Se `docs/dev-003-implementation.md`. npm-verifiering är uppskjuten.
+## Dokumentation och status
 
-## DEV-006 (v0.1.8)
-Lokala ändringar av element-/relationstyper, ångra och ZIP-export. Verifiering är uppskjuten på användarens begäran; se `docs/dev-006-implementation.md`.
+Projektets arkitektur, utvecklingsplan, acceptanstester, verifieringsrapport och DEV-001–013-dokumentation finns i `docs/`. Arbetsstatus finns i `.system-builder/work-status.yaml`.
 
-## DEV-007
-Local CRUD for properties, property sets, data types and enumerations in `properties.yaml`. npm verification deferred by user. See `docs/dev-007-implementation.md`.
-
-
-DEV-008 (v0.1.10): redigerbara viewpoints, notation, provenance och guidance; verifiering uppskjuten.
-
-## DEV-009 – lokal utkastlagring
-
-Utkast och revisioner sparas automatiskt i webbläsarens IndexedDB. Öppna ett tidigare utkast eller återställ en revision i gränssnittet. Lagringen är lokal och kan försvinna om webbplatsdata rensas. Se `docs/dev-009-implementation.md`. npm-verifieringen är uppskjuten.
-
-## DEV-010 (v0.1.12)
-Filjämförelse, revisionsjämförelse, version i canonical/version.yaml och export med skydd för inaktuella genererade artefakter. Se `docs/dev-010-implementation.md`. npm-verifieringen uppskjuten enligt beslut.
+**Verifieringsläge:** 28/28 befintliga enhetstester, lint, typkontroll och produktionsbygge har godkänts i Agent Workspace. PWA-installation och verklig offlineåteröppning på iPad/iPhone är ännu inte fullständigt acceptanstestade.

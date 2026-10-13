@@ -1,0 +1,168 @@
+schema_version: 1
+project:
+  id: metamodel-studio
+  name: Metamodel Studio
+  version: 0.1.16
+mode: CREATE
+phase: implementation
+plan:
+  path: docs/development-plan.md
+  total_steps: 13
+progress:
+  completed_steps: []
+  implemented_steps:
+    - DEV-001
+    - DEV-002
+    - DEV-003
+    - DEV-004
+    - DEV-005
+    - DEV-006
+    - DEV-007
+    - DEV-008
+    - DEV-009
+    - DEV-010
+    - DEV-011
+    - DEV-012
+  active_step: DEV-012
+  next_step: DEV-013
+verification:
+  previous_agent_workspace:
+    dev_001_npm_install: passed
+    dev_001_unit_tests: passed_4_of_4
+    dev_001_typescript_build: passed
+    dev_001_vite_production_build: passed
+  dev_001_lint: deferred_by_user
+  dev_002_typecheck: deferred_by_user
+  dev_002_lint: deferred_by_user
+  dev_002_unit_tests: written_not_executed
+  dev_002_build: deferred_by_user
+  dev_003_typecheck: deferred_by_user
+  dev_003_lint: deferred_by_user
+  dev_003_unit_tests: written_not_executed
+  dev_003_build: deferred_by_user
+  dev_004_typecheck: deferred_by_user
+  dev_004_lint: deferred_by_user
+  dev_004_unit_tests: written_not_executed
+  dev_004_build: deferred_by_user
+  dev_005_typecheck: deferred_by_user
+  dev_005_lint: deferred_by_user
+  dev_005_unit_tests: deferred_by_user
+  dev_005_build: deferred_by_user
+state:
+  overall: dev_012_implemented_verification_deferred_by_user
+  blockers: []
+  warnings:
+    - Do not present DEV-001 through DEV-007 as fully test-verified.
+    - Run full npm run verify before release or accepting user data as trusted.
+    - Edited export preserves payload bytes of unchanged entries, not ZIP envelope metadata.
+next_action:
+  id: DEV-013
+  requires_explicit_user_request: true
+  instruction: Continue with DEV-013 only on explicit user request; npm verification remains deferred.
+
+regression_fix_2026_10_13:
+  scope: DEV-005 regression test text expectation only
+  change: Match missing canonical files diagnostic rather than obsolete literal
+  implementation_behavior_changed: false
+  agent_workspace_verify: pending
+
+dev_006:
+  implementation: implemented_not_executed
+  typecheck: deferred_by_user
+  lint: deferred_by_user
+  unit_tests: written_not_executed
+  build: deferred_by_user
+  documentation: docs/dev-006-implementation.md
+
+dev_007:
+  implementation: implemented_not_executed
+  typecheck: deferred_by_user
+  lint: deferred_by_user
+  unit_tests: written_not_executed
+  build: deferred_by_user
+  documentation: docs/dev-007-implementation.md
+
+dev_008:
+  implementation: implemented_not_executed
+  scope: viewpoints_notation_provenance_guidance
+  npm_verification: deferred_by_user
+  next_step: DEV-013_not_started
+  documentation: docs/dev-008-implementation.md
+
+
+dev_009:
+  implementation: implemented_not_executed
+  scope: indexeddb_drafts_revision_history_restore
+  typecheck: deferred_by_user
+  lint: deferred_by_user
+  unit_tests: deferred_by_user
+  build: deferred_by_user
+  next_step: DEV-010_not_started
+  documentation: docs/dev-009-implementation.md
+
+
+dev_010:
+  implementation: implemented_not_executed
+  scope: file_diff_version_update_revision_comparison_safe_export_stale_generated_manifest
+  typecheck: deferred_by_user
+  lint: deferred_by_user
+  unit_tests: written_not_executed
+  build: deferred_by_user
+  next_step: DEV-011_not_started
+  documentation: docs/dev-010-implementation.md
+
+
+dev_011:
+  implementation: implemented_not_executed
+  scope: svg_graph_filters_focus_navigation_reference_dependencies
+  typecheck: deferred_by_user
+  lint: deferred_by_user
+  unit_tests: not_executed
+  build: deferred_by_user
+  next_step: DEV-013_not_started
+  documentation: docs/dev-011-implementation.md
+
+dev_012:
+  implementation: complete_unverified
+  pwa: manifest_icons_service_worker_static_precache
+  security: restrictive_csp_same_origin_cache_whitelist
+  offline_browser_e2e: deferred_by_user
+  typecheck_lint_tests_build: deferred_by_user
+  dev_013_started: false
+
+verification_2026_10_13:
+  scope: typescript_fixes_only
+  fixes: [TS2322_editing_target, TS2638_yaml_seq]
+  initial_agent_workspace: npm_install_passed_tests_28_of_28_build_blocked_by_two_typescript_errors
+  corrected_package: not_executed_agent_workspace_upload_rejected_generated_zip
+  dev_013_started: false
+
+verification_0_1_16:
+  provider: Agent_Workspace
+  runtime: node_22
+  npm_install: passed_251_packages
+  vitest: passed_28_of_28
+  typescript: passed
+  production_build: passed
+  lint: not_run
+  pwa_offline_browser: not_run
+  build_warning: javascript_chunk_over_500_kb
+  dev_013_started: false
+
+dev_013:
+  status: implemented_quality_checks_passed_browser_offline_pending
+  version: 0.1.17
+  changes: [eslint_service_worker_globals, release_verification_documentation]
+  agent_workspace:
+    runtime: node_22
+    npm_install: passed
+    eslint: passed_zero_errors
+    vitest: passed_28_of_28
+    typescript: passed
+    vite_build: passed
+    warning: javascript_chunk_larger_than_500_kb
+  pwa_preview:
+    publication: passed
+    browser_screenshot: captured
+    offline_network_disconnection: not_verified
+    installation_ios_ipados: not_verified

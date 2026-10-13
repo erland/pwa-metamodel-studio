@@ -1,0 +1,23 @@
+{
+  "project": "metamodel-studio",
+  "planning_version": "0.1.0",
+  "date": "2026-10-13",
+  "source_sha256": {
+    "metamodel_builder": "a84f9e64c7da87b7aa6ac3ca7e74285dce8a0467ba3488137d0b34aadc742848",
+    "example_model": "0ac3b1c7a7add0440e4d3ae2b13167d24abf1eaf11faaa39bdb9a517eb33eec1"
+  },
+  "implementation_started": false,
+  "next_step": "DEV-001",
+  "files": {
+    ".system-builder/work-status.yaml": "481f47b03bf8ac0f89c85f36870730f5bbe51763c96bd5d0c935bef443652eee",
+    "AGENTS.md": "83a4236c0dc1f52b730886b9513bfc26ba5e20301d71a39865b07578268b5f0b",
+    "README.md": "b9a953ef0f8004e1d52dd328218df0c9e4e78f797140ac249e84e924fffceb27",
+    "docs/acceptance-test-plan.md": "fb72122c9b52782de4996c743a9fcaf001cdaae30b2fadcd5efee90851e0db1e",
+    "docs/decisions-and-risks.md": "2ee7384ac8197d1e1fa8a0938c5000fc217628bbba11d2970379656aa472bf80",
+    "docs/development-plan.md": "500c6d8cbebeae726e2d6529896fe2b28aa479b9ab6e81e60b110ed6f7d4ef24",
+    "docs/functional-specification.md": "b24202ed1c65f5b79ee2881d8af0f2846d16dc583ef1e7470695f904adcc4daf",
+    "docs/source-inventory.md": "62dfa5730559a57140c5809d9b29ac59f6d0dc300e6a20e2bf166b5d09755ac4",
+    "docs/target-architecture.md": "b6428203898cd4abc8453164a2fbe6ee783e065b1416054d8a5e67ae05752cd3",
+    "docs/traceability.md": "095f60d67075ecb59cd532c36a7395bc4ff74a710a0116576452f334fa264994"
+  }
+}

@@ -1,0 +1,29 @@
+name: Build and test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify fixture, TypeScript, ESLint, tests and build
+        run: npm run verify
+      - name: Upload production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: metamodel-studio-dist
+          path: dist/
+          if-no-files-found: error

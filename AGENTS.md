@@ -1,0 +1,2 @@
+# Arbetsinstruktioner
+Följ System Builder v1.6.1 principer: läs faktisk källa, utför ett DEV-steg per begäran, verifiera före PASS, uppdatera `.system-builder/work-status.yaml`, rekommendera nästa steg och stoppa. Funktionell specifikation/arkitektur är normerande; implementation får inte tyst ändra dessa. Prioritera REPAIR vid verifieringsfel. Hantera original-ZIP som opålitlig input. DEV-001 är ännu inte påbörjad.

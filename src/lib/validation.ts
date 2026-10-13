@@ -1,4 +1,4 @@
-import type { ErrorObject, ValidateFunction } from 'ajv';
+import type { ErrorObject } from 'ajv';
 import * as validators from './generated/validators.js';
 import type { CanonicalName, ParsedMetamodel, MetamodelEntity } from './metamodel';
 
@@ -17,6 +17,11 @@ export interface ValidationReport {
   valid: boolean;
 }
 const schemaNames = ['version','metamodel','properties','constraints','viewpoints','notation','provenance','guidance'] as const;
+function pathOf(e: ErrorObject): string {
+  const suffix = e.keyword === 'required' ? '/' + String(e.params.missingProperty) : e.keyword === 'additionalProperties' ? '/' + String(e.params.additionalProperty) : '';
+  return (e.instancePath + suffix) || '/';
+}
+const escaped = (x: string): string => x.replace(/~/g,'~0').replace(/\//g,'~1');
 const collections: Record<string,string> = {element:'elements',relationship:'relationships',property:'property_definitions',propertySet:'property_sets',dataType:'data_types',enumeration:'enumerations',constraint:'constraints',viewpoint:'viewpoints',style:'styles',source:'sources',pattern:'patterns',antiPattern:'anti_patterns'};
 function nodePath(n: MetamodelEntity, index: number): string { return `/${collections[n.kind]}/${index}`; }
 /** Validerar v1-struktur samt referenser. Naturliga språkregler kan inte exekveras. */

@@ -1,15 +1,6 @@
-import Ajv2020 from 'ajv/dist/2020';
-import type { ErrorObject } from 'ajv';
+import type { ErrorObject, ValidateFunction } from 'ajv';
+import * as validators from './generated/validators.js';
 import type { CanonicalName, ParsedMetamodel, MetamodelEntity } from './metamodel';
-import common_definitions from './schemas/common-definitions.schema.json';
-import version from './schemas/version.schema.json';
-import metamodel from './schemas/metamodel.schema.json';
-import properties from './schemas/properties.schema.json';
-import constraints from './schemas/constraints.schema.json';
-import viewpoints from './schemas/viewpoints.schema.json';
-import notation from './schemas/notation.schema.json';
-import provenance from './schemas/provenance.schema.json';
-import guidance from './schemas/guidance.schema.json';
 
 export type Severity = 'error' | 'warning' | 'info';
 export interface Diagnostic {
@@ -26,16 +17,6 @@ export interface ValidationReport {
   valid: boolean;
 }
 const schemaNames = ['version','metamodel','properties','constraints','viewpoints','notation','provenance','guidance'] as const;
-const schemaFiles = [version,metamodel,properties,constraints,viewpoints,notation,provenance,guidance];
-const ajv = new Ajv2020({allErrors:true,strict:false,validateFormats:false});
-ajv.addSchema(common_definitions);
-for (const schema of schemaFiles) ajv.addSchema(schema);
-const validators = Object.fromEntries(schemaNames.map((name,i) => [name,ajv.getSchema(schemaFiles[i].$id)!])) as Record<CanonicalName, ReturnType<typeof ajv.compile>>;
-function pathOf(e: ErrorObject): string {
-  const suffix = e.keyword === 'required' ? '/' + String(e.params.missingProperty) : e.keyword === 'additionalProperties' ? '/' + String(e.params.additionalProperty) : '';
-  return (e.instancePath + suffix) || '/';
-}
-const escaped = (x: string): string => x.replace(/~/g,'~0').replace(/\//g,'~1');
 const collections: Record<string,string> = {element:'elements',relationship:'relationships',property:'property_definitions',propertySet:'property_sets',dataType:'data_types',enumeration:'enumerations',constraint:'constraints',viewpoint:'viewpoints',style:'styles',source:'sources',pattern:'patterns',antiPattern:'anti_patterns'};
 function nodePath(n: MetamodelEntity, index: number): string { return `/${collections[n.kind]}/${index}`; }
 /** Validerar v1-struktur samt referenser. Naturliga språkregler kan inte exekveras. */

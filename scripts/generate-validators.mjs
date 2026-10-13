@@ -15,7 +15,19 @@ for (const name of names) {
   ajv.addSchema(definition);
   ids[name] = definition.$id;
 }
-const output = standaloneCode(ajv, ids);
+// Ajv emits CommonJS runtime helpers even with esm: true. Convert those static
+// require() calls to ESM imports so Vite can bundle them for browser execution.
+const raw = standaloneCode(ajv, ids);
+const runtimeModules = new Map();
+const outputBody = raw.replace(/require\\(["'](ajv\\/dist\\/runtime\\/[^"']+)["']\\)/g, (_match, modulePath) => {
+  if (!runtimeModules.has(modulePath)) runtimeModules.set(modulePath, `__ajvRuntime${runtimeModules.size}`);
+  return runtimeModules.get(modulePath);
+});
+if (/\\brequire\\s*\\(/.test(outputBody)) throw new Error('Unconverted CommonJS require in generated validators');
+const imports = [...runtimeModules].map(([path, variable]) =>
+  `import * as ${variable} from '${path}.js';`
+).join('\n');
+const output = imports + '\n' + outputBody;
 const target = new URL('../src/lib/generated/', import.meta.url);
 await mkdir(target, { recursive: true });
 await writeFile(new URL('validators.js', target), output);
